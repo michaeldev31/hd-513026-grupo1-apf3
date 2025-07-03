@@ -10,6 +10,10 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   deploy:
     environment:
@@ -18,17 +22,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout del código
+      - name: Checkout del repositorio
         uses: actions/checkout@v4
 
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v3
 
-      - name: Subir archivos para deploy
+      - name: Subir archivos del sitio
         uses: actions/upload-pages-artifact@v2
         with:
-          path: '.'  # O cambia si tu sitio está en /build o /dist
+          path: '.'  # Cambia si tienes /dist o /build
 
-      - name: Desplegar
+      - name: Desplegar a GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
